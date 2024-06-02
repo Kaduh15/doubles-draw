@@ -36,19 +36,21 @@ function PlayerList({
   removePlayer: (index: number) => void
 }) {
   return (
-    <ul className="flex flex-col gap-2 mt-2">
-      {players.map((player, index) => (
-        <li
-          key={index}
-          className="flex gap-2 justify-between items-center text-xl font-semibold bg-white dark:bg-gray-800 p-2 rounded shadow"
-        >
-          <span>{player}</span>
-          <Button onClick={() => removePlayer(index)} className="p-1">
-            <X className="w-4 h-4" />
-          </Button>
-        </li>
-      ))}
-    </ul>
+    <div className="max-h-96 overflow-y-auto">
+      <ul className="flex flex-col gap-2 mt-2">
+        {players.map((player, index) => (
+          <li
+            key={index}
+            className="flex gap-2 justify-between items-center text-xl font-semibold bg-white dark:bg-gray-800 p-2 rounded shadow"
+          >
+            <span>{player}</span>
+            <Button onClick={() => removePlayer(index)} className="p-1">
+              <X className="w-4 h-4" />
+            </Button>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
@@ -86,7 +88,7 @@ function App() {
   const addPlayer = () => {
     if (inputValue) {
       setPlayers((prev) =>
-        Array.from(new Set([...prev, inputValue.toUpperCase()])),
+        Array.from(new Set([inputValue.toUpperCase(), ...prev])),
       )
       setInputValue('')
     }
@@ -112,12 +114,12 @@ function App() {
       <header className="w-full flex justify-end p-4">
         <ModeToggle />
       </header>
-      <main className="w-full max-w-md space-y-6">
+      <main className="w-full max-w-lg flex flex-col space-y-6">
         <section>
           <h1 className="text-3xl font-bold text-center">
             Adicionar Jogadores
           </h1>
-          <div className="flex gap-4 mt-4">
+          <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <Input
               type="text"
               value={inputValue}
@@ -125,7 +127,7 @@ function App() {
               className="flex-1"
               placeholder="Nome do jogador"
             />
-            <Button onClick={addPlayer} className="whitespace-nowrap">
+            <Button onClick={addPlayer} className="w-full sm:w-auto">
               Adicionar
             </Button>
           </div>
